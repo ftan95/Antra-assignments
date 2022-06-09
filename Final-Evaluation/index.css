@@ -1,0 +1,127 @@
+*,
+*::before,
+*::after{
+    margin:0;
+    padding:0;
+    box-sizing: inherit
+}
+
+html{
+    font-size: 62.25%;
+}
+
+body{
+    font-size: 1.6rem;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+.search-wrapper {
+    margin: auto;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    box-shadow: 0px 0px 8px 0px;
+    -webkit-box-shadow: 0px 0px 8px 0px;
+    -moz-box-shadow: 0px 0px 8px 0px;
+    background-color: gray;
+    width: 100%;
+    z-index: 100;
+    text-align: center;
+}
+
+.search-bar {
+    width: 300px;
+    margin-bottom: 10px;
+    margin: 0 auto;
+}
+
+.search-icon {
+    position: absolute;
+    padding: 10px;
+    min-width: 40px;
+}
+
+.search {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+}
+
+.container-header {
+    margin-top: 100px;
+    text-align: center;
+}
+
+.result-title {
+    margin-bottom: 10px;
+}
+
+hr {
+    margin-top: 10px;
+    width: 85%;
+    margin: auto;
+}
+
+.loader {
+    display: none;
+    border: 8px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 8px solid #3498db;
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+.album-container {
+    display: flex;
+    margin: 0 auto;
+    width: 85%;
+    margin-top: 20px;
+}
+
+.album-content {
+    list-style-type: none;
+    padding: 0; 
+    margin: 0;
+    display: none;
+}
+
+.album__content-item {
+    display: none;
+    border: 1px solid cornflowerblue;
+    align-items: center;
+    padding: 5px;
+    flex-direction: column;
+    margin: 10px;
+    width: 150px;
+    height: 200px;
+    float: left;
+}
+
+.album__content-item:nth-child(1),
+.album__content-item:nth-child(2),
+.album__content-item:nth-child(3),
+.album__content-item:nth-child(4),
+.album__content-item:nth-child(5) {
+    display: flex;
+}
+
+.album__title {
+    text-align: center;
+    overflow: hidden;
+}

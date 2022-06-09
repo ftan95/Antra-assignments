@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.js"
+      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+      crossorigin="anonymous"
+    ></script>
+    <title>JQuery</title>
+  </head>
+  <body>
+    <button class="continue">Button 1</button>
+    <button class="continue">Button 2</button>
+
+    <span class="banner-message">banner-message</span>
+    <!-- <span class="banner-message">banner-message2</span> -->
+    <div id="button-container">
+      <button>Show</button>
+    </div>
+
+    <p>This is a paragraph.</p>
+    <button id="btn1">Append text</button>
+    <button id="setcss">Set background-color of p</button>
+    <button id="load">Get External Content</button>
+
+    <div id="div1"><h2>Let jQuery AJAX Change This Text</h2></div>
+
+    <script>
+      class PQuery {
+        constructor(selector) {
+          // target the element
+          if ((selector === window) | (selector === document)) {
+            this.elements = [selector];
+          } 
+          else {
+            // query all html elements with the following selector/s
+            this.elements = document.querySelectorAll(selector);
+          }
+          console.log("what entered the PQuery ", this.elements)
+        }
+
+        html(innerhtml) {
+          console.log('html is working');
+          // change the innerHTML for the target element
+          this.elements.forEach((item) => {
+            item.innerHTML = innerhtml;
+          });
+          return this;
+        }
+
+        hide() {
+          this.elements.forEach((item) => {
+            item.preDispaly = item.style.display;
+            item.style.display = 'none';
+          });
+          return this;
+        }
+
+        on(eventType, callback) {
+          this.elements.forEach((item) => {
+            item.addEventListener(
+              eventType,
+              callback
+            );
+          });
+          return this;
+        }
+
+        show() {
+          this.elements.forEach((item) => {
+            item.style.display = item.preDispaly;
+          });
+          return this;
+        }
+
+        // -------------------- Assignment ----------------------------------
+
+        click(callback) {
+            this.elements.forEach((item) => {
+                item.addEventListener("click", callback);
+            });
+            return this;
+        }
+
+        append(text) {
+            this.elements.forEach((item) => {
+                item.innerHTML = item.innerHTML + text;
+            });
+            return this;
+        }
+
+        css(attribute, value) {
+            this.elements.forEach((item) => {
+                item.style.setProperty(attribute, value);
+            });
+            return this;
+        }
+
+        load(url, callback) {
+            this.elements.forEach((item) => {
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("GET", url, true);
+                // console.log(xhttp);
+                xhttp.onload = function() {
+                    // console.log(this);
+                    if (this.status === 200) {
+                        callback(this.response, "success");
+                    }
+                }
+                xhttp.send();
+            });
+            return this;
+        }
+      }
+
+      const $$ = function(selector) {
+        console.log('$$ is a function');
+        return new PQuery(selector);
+      };
+
+      $$('button.continue').html('<h1>Next Step...</h1>');
+
+    //   const a = $$('button.continue').html('change1').on('click', () => {
+    //       console.log('Chaining');
+    //     });
+    //   const b = $$('span.banner-message');
+
+      var hiddenBox = $$('.banner-message');
+      hiddenBox.hide();
+    //   $$('#button-container button').on(
+    //     'click',
+    //     function (event) {
+    //       alert('Click');
+    //       hiddenBox.show();
+    //     }
+    //   );
+
+      $$('#button-container button').click(function() {
+          console.log("inside click");
+          hiddenBox.show();
+      });
+
+    // ---------------------- Testing assignment functions --------------------
+
+    $$("#btn1").click(function(){
+        $$("p").append(" <b>Appended text</b>.");
+    });
+
+    $$("#setcss").click(function(){
+        $$("p").css("background-color", "yellow");
+    });
+
+    $$("#load").click(function(){
+        $$("#div1").load("https://www.w3schools.com/jquery/demo_cd_catalog.xml", function(response, status) {
+            // console.log(response, status);
+            if (status == "success"){
+                // console.log('success')
+                $("#div1").html("<ol></ol>");
+                $(response).find("artist").each(function(){
+                var item_text = $(this).text();
+                $('<li></li>').html(item_text).appendTo('ol');
+                });
+            }
+        });
+    });
+
+    </script>
+  </body>
+</html>
