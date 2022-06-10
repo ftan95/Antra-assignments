@@ -1,0 +1,135 @@
+*,
+*::before,
+*::after{
+    margin:0;
+    padding:0;
+    box-sizing: inherit
+}
+
+html{
+    font-size: 62.25%;
+}
+
+body{
+    font-size: 1.6rem;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+.search-wrapper {
+    margin: auto;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    box-shadow: 0px 0px 8px 0px;
+    -webkit-box-shadow: 0px 0px 8px 0px;
+    -moz-box-shadow: 0px 0px 8px 0px;
+    background-color: gray;
+    width: 100%;
+    z-index: 100;
+    text-align: center;
+    background-color: aquamarine;
+}
+
+.search-bar {
+    width: 300px;
+    margin-bottom: 10px;
+    margin: 0 auto;
+}
+
+.search-icon {
+    position: absolute;
+    padding: 10px;
+    min-width: 40px;
+}
+
+.search {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    border-radius: 20px;
+}
+
+.container-header {
+    margin-top: 100px;
+    text-align: center;
+}
+
+.result-title {
+    margin-bottom: 10px;
+}
+
+hr {
+    margin-top: 10px;
+    width: 85%;
+    margin: auto;
+    border-color: aquamarine;
+}
+
+.loader {
+    display: block;
+    border: 8px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 8px solid #3498db;
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+.album-container {
+    display: flex;
+    margin: 0 auto;
+    width: 85%;
+    margin-top: 20px;
+}
+
+.album-content {
+    list-style-type: none;
+    padding: 0; 
+    margin: 0;
+    display: block;
+}
+
+.album__content-item {
+    display: flex;
+    border: 1px solid aquamarine;
+    align-items: center;
+    padding: 5px;
+    flex-direction: column;
+    margin: 10px;
+    width: 150px;
+    height: 200px;
+    float: left;
+    background-color: lightgrey;
+}
+
+
+/* .album__content-item:nth-child(-n+30) {
+    display: flex;
+} */
+
+.album__title {
+    text-align: center;
+    overflow: hidden;
+}
+
+#load-more {
+    display: none;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
