@@ -85,7 +85,7 @@ console.log("<Button />", <Button />)
 
 
 ReactDOM.render(
-  <FuncCounter />,
+  <App />,
   document.getElementById('root')
 );
 
