@@ -30,6 +30,7 @@ body{
     width: 100%;
     z-index: 100;
     text-align: center;
+    background-color: aquamarine;
 }
 
 .search-bar {
@@ -48,6 +49,7 @@ body{
     width: 100%;
     padding: 10px;
     text-align: center;
+    border-radius: 20px;
 }
 
 .container-header {
@@ -63,6 +65,7 @@ hr {
     margin-top: 10px;
     width: 85%;
     margin: auto;
+    border-color: aquamarine;
 }
 
 .loader {
@@ -103,7 +106,7 @@ hr {
 
 .album__content-item {
     display: none;
-    border: 1px solid cornflowerblue;
+    border: 1px solid aquamarine;
     align-items: center;
     padding: 5px;
     flex-direction: column;
@@ -111,17 +114,22 @@ hr {
     width: 150px;
     height: 200px;
     float: left;
+    background-color: lightgrey;
 }
 
-.album__content-item:nth-child(1),
-.album__content-item:nth-child(2),
-.album__content-item:nth-child(3),
-.album__content-item:nth-child(4),
-.album__content-item:nth-child(5) {
+
+/* .album__content-item:nth-child(-n+30) {
     display: flex;
-}
+} */
 
 .album__title {
     text-align: center;
     overflow: hidden;
+}
+
+#load-more {
+    display: none;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }

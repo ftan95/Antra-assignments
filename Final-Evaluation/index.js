@@ -5,22 +5,17 @@ const resultTitle = document.querySelector('.result-title');
 const loader = document.querySelector('.loader');
 const loadMore = document.querySelector('#load-more');
 let albums = [];
-let currentItem = 5;
+let initialResults = 30;
+let results = initialResults;
+let timer;
+let timeInterval = 3000;
 
-function load() {
-    loadMore.addEventListener('click', (e) => {
-        // console.log(e.target.className)
-        let boxes = [...document.querySelectorAll('.album-container .album-content .album__content-item')];
-        // console.log('boxes length ', boxes.length);
-        for (let i = currentItem; i < currentItem + 5; i++) {
-            console.log("i ", i);
-            if (i >= boxes.length) {
-                loadMore.style.display = 'none';
-                break;
-            }
-            boxes[i].style.display = 'flex';
+function autoSearch() {
+    searchInput.addEventListener('keyup', () => {
+        clearTimeout(timer); // each time a key is released, reset the timer, indicate user is still typing
+        if (searchInput.value) {
+            timer = setTimeout(fetchData, timeInterval, searchInput.value); // only fetch after 3 seconds of nothing
         }
-        currentItem += 5;
     })
 }
 
@@ -35,13 +30,39 @@ function addToDoEvent() {
 
 function onClickSearch() {
     searchIcon.addEventListener('click', (e) => {
-        console.log('click ', e.target.className);
+        // console.log('click ', e.target.className);
         fetchData(searchInput.value);
     })
 }
 
-addToDoEvent();
-onClickSearch();
+function load() {
+    loadMore.addEventListener('click', (e) => {
+        // return a list of all elements that match the following selectors in order to turn on the display for the next elements
+        let boxes = [...document.querySelectorAll('.album-container .album-content .album__content-item')];
+        // console.log(boxes);
+        for (let i = results; i < results + 50; i++ ) {
+            if (i >= boxes.length) {
+                loadMore.style.display = 'none';
+                break;
+            }
+            boxes[i].style.display = 'flex';
+        }
+        results += 50;
+
+        if (results > boxes.length) {
+            resultTitle.innerHTML = `${boxes.length} results for "${searchInput.value}"`;
+            results = initialResults;
+        }
+        else {
+            resultTitle.innerHTML = `${results} results for "${searchInput.value}"`;
+        }
+        
+    })
+}
+
+autoSearch();
+// addToDoEvent();
+// onClickSearch();
 load();
 
 function fetchData(param) {
@@ -55,10 +76,16 @@ function fetchData(param) {
             albums = data.results;
             onReady(function() {
                 renderAlbums(albums);
-                resultTitle.innerHTML = `${data.results.length} results for "${param}"`;
+                if (data.results.length < results) {
+                    resultTitle.innerHTML = `${data.results.length} results for "${param}"`;
+                }
+                else {
+                    resultTitle.innerHTML = `${results} results for "${param}"`;
+                    loadMore.style.display = 'block';
+                }
                 resultTitle.style.display = 'block';
                 loader.style.display = 'none';
-                albumContent.style.display = 'block'
+                albumContent.style.display = 'block';
             })
         });
     }
@@ -71,8 +98,8 @@ function fetchData(param) {
 function onReady(callback) {
     var intervalId = window.setInterval(function() {
       if (albumContent !== undefined) {
-        window.clearInterval(intervalId);
-        callback.call(this);
+        window.clearInterval(intervalId);   // once the album list is defined, stop the interval
+        callback.call(this); // call the function passed to onReady on the window
       }
     }, 1000);
   }
@@ -104,4 +131,12 @@ function generateAlbumTmp(album) {
 
 function render(template, element) {
     element.innerHTML = template;
+    let boxes = [...document.querySelectorAll('.album-container .album-content .album__content-item')];
+    // display the first n results
+    for (let i = 0; i < results; i++ ) {
+        if (i >= boxes.length) {
+            break;
+        }
+        boxes[i].style.display = 'flex';
+    }
 }
