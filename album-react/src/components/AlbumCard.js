@@ -6,13 +6,13 @@ import Typography from '@mui/material/Typography';
 
 const AlbumCard = (props) => {
     return (
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={3} md={2}>
             <Paper elevation={5} className="album__content-item">
                 <div className="album_cover">
                     <img src={props.img} alt="cover name" />
                 </div>
-                <Box paddingX={1}>
-                    <Typography variant="h5" component="h2" className="album__title">
+                <Box paddingX={1} className="album__title">
+                    <Typography variant="h5" component="h2" >
                         {props.name}
                     </Typography>
                 </Box>

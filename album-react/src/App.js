@@ -2,56 +2,14 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import './App.css';
 import AlbumCard from './components/AlbumCard';
-import { albumActions } from './store/index-store';
-import { fetchData } from './store/index-store';
+import { albumActions, getAlbums } from './store/index-store';
+// import { fetchData } from './store/index-store';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import SearchIcon from '@mui/icons-material/Search';
-import InputBase from '@mui/material/InputBase';
-import { styled, alpha } from '@mui/material/styles';
+import SearchBar from './components/SearchBar';
 
-let timer;
-let timeInterval = 3000;
-
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 1),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.5),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}));
+// let timer;
+// let timeInterval = 3000;
 
 class App extends Component {
 
@@ -62,7 +20,7 @@ class App extends Component {
   enterSearch = (event) => {
     if (event.key === 'Enter') {
       this.props.resetAlbumCount();
-      this.props.fetch(this.props.searchEntry, this.props.albumCount);
+      this.props.fetch(this.props.searchEntry);
     }
   }
 
@@ -77,16 +35,7 @@ class App extends Component {
             <div className="search-bar">
                 {/* <input type="text" placeholder="Search" className="search" required 
                   onChange={this.searchHandler.bind(this)} onKeyDown={this.enterSearch.bind(this)} /> */}
-                  <Search>
-                    <SearchIconWrapper>
-                      <SearchIcon />
-                    </SearchIconWrapper>
-                    <StyledInputBase
-                      placeholder="Search…"
-                      inputProps={{ 'aria-label': 'search' }}
-                      onChange={this.searchHandler.bind(this)} onKeyDown={this.enterSearch.bind(this)}
-                    />
-                  </Search>
+              <SearchBar search={this.searchHandler.bind(this)} enterSearch={this.enterSearch.bind(this)}/>
             </div>
         </header>
         <Container>
@@ -127,7 +76,7 @@ const mapDispatchToProps = dispatch => {
   return {
     search: (value) => dispatch(albumActions.searchHandler({searchValue: value})),
     load: () => dispatch(albumActions.loadMore()),
-    fetch: (searchEntry, albumCount) => dispatch(fetchData(searchEntry, albumCount)),
+    fetch: (searchEntry) => dispatch(getAlbums(searchEntry)),
     resetAlbumCount: () => dispatch(albumActions.resetAlbumCount())
   }
 }
