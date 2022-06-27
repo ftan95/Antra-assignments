@@ -47,8 +47,8 @@ const albumSlice = createSlice({
     extraReducers: {
         [getAlbums.pending]: (state) => {
             state.loading = true
-          },
-          [getAlbums.fulfilled]: (state, { payload }) => {
+        },
+        [getAlbums.fulfilled]: (state, { payload }) => {
             state.loading = false
             console.log(payload);
             if (payload.resultCount < state.albumCount) {
@@ -58,10 +58,10 @@ const albumSlice = createSlice({
                 state.searchTitle = `${initialAlbums} results for "${state.searchEntry}"`;
             }
             state.albums = payload.results;
-          },
-          [getAlbums.rejected]: (state) => {
+        },
+        [getAlbums.rejected]: (state) => {
             state.loading = false
-          },
+        },
     }
 });
 
